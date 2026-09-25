@@ -62,6 +62,7 @@ float receberPesoModalidade(float valorAtual, int &economicas, int &expressas, i
                 taxaPeso = 0.2 * valorAtual;
             }
             entradaPesoValida = 1;
+            printf(">>> Valor adicional peso: %.2f\n", taxaPeso);
         } else {
             printf("\nPor favor, o peso deve ser maior que 0.\n");
         }
@@ -100,6 +101,33 @@ float receberPesoModalidade(float valorAtual, int &economicas, int &expressas, i
     return valorAtual + taxaPeso + taxaModalidade;
 }
 
+float ativarProtecao(float valorAtual) {
+    float valorFinal;
+    int entradaValida = 0;
+    int protecao;
+
+    while(entradaValida == 0) {
+        printf("Deseja contratar o servico adicional de proteção?\n");
+        printf("0 - Não\n");
+        printf("1 - Sim (R$7.50 adicional)\n");
+        scanf("%d", &protecao);
+
+        switch(protecao) {
+            case 0:
+                entradaValida = 1;
+                return valorAtual;
+                break;
+            case 1:
+                entradaValida = 1;
+                valorFinal = valorAtual + 7.50;
+                return valorFinal;
+                break;
+            default:
+                printf("Por favor, insira 0 ou 1.\n");
+        }
+    }
+}
+
 int main(void) {
     system("chcp 65001 > nul");
 	setlocale(LC_ALL, "Brazilian Portuguese");
@@ -113,6 +141,7 @@ int main(void) {
 
         subtotal = receberDistancia();
         subtotal = receberPesoModalidade(subtotal, qtdEconomicas, qtdExpressas, qtdPrioritarias);
+        subtotal = ativarProtecao(subtotal);
 
         inputConclusaoValido = 0;
         while(inputConclusaoValido == 0) {
