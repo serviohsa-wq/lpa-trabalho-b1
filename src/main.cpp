@@ -8,10 +8,10 @@ float receberDistancia() {
 
     while (entradaValida == 0) {
         printf("============= DISTÂNCIA =============\n");
-        printf("Até 5km: R$8,00\n");
-        printf("De 6 a 15km: R$12,00\n");
-        printf("De 16 a 30km: R$18,00\n");
-        printf("A partir de 31km: R$25,00\n");
+        printf("Até 5km..............: R$8,00\n");
+        printf("De 6 a 15km..........: R$12,00\n");
+        printf("De 16 a 30km.........: R$18,00\n");
+        printf("A partir de 31km......: R$25,00\n");
         printf("Insira a distância a ser percorrida em km: ");
         scanf("%f", &distancia);
 
@@ -44,10 +44,10 @@ float receberPesoModalidade(float valorAtual, int &economicas, int &expressas, i
 
     while(entradaPesoValida == 0) {
         printf("============= PESO =============\n");
-        printf("\nAté 2kg: Valor normal\n");
-        printf("\nAcima de 2kg até 5kg: 5%% taxa adicional\n");
-        printf("\nAcima de 5kg até 10kg: 10%% taxa adicional\n");
-        printf("\nAcima de 10kg: 20%% taxa adicional\n");
+        printf("\nAté 2kg...................: Valor normal\n");
+        printf("\nAcima de 2kg até 5kg......: 5%% taxa adicional\n");
+        printf("\nAcima de 5kg até 10kg.....: 10%% taxa adicional\n");
+        printf("\nAcima de 10kg.............: 20%% taxa adicional\n");
         printf("\nInsira o peso a ser carregado em kg: ");
         scanf("%f", &peso);
 
@@ -70,9 +70,9 @@ float receberPesoModalidade(float valorAtual, int &economicas, int &expressas, i
 
     while(entradaModalidadeValida == 0) {
         printf("\n========== MODALIDADE ==========\n");
-        printf("1 - Econômica: Valor normal\n");
-        printf("2 - Expressa: 15%% taxa adicional\n");
-        printf("3 - Prioritária: 30%% taxa adicional\n");
+        printf("1 - Econômica...: Valor normal\n");
+        printf("2 - Expressa....: 15%% taxa adicional\n");
+        printf("3 - Prioritária.: 30%% taxa adicional\n");
         printf("\nEscolha uma modalidade: ");
         scanf("%d", &modalidade);   
 
@@ -128,6 +128,26 @@ float ativarProtecao(float valorAtual) {
     }
 }
 
+float receberTentativasEntregas(float valorAtual) {
+    float valorFinal, valorAdicional;
+    int entradaValida = 0;
+    int tentativas;
+
+    while (entradaValida == 0) {
+        printf("Digite a quantidade de tentativas adicionais de entrega (R$4,00 cada)\n");
+        printf("Caso não deseje tentativas adicionais, digite 0.\n");
+        scanf("%d", &tentativas);
+
+        if(tentativas >= 0) {
+            valorAdicional = 4 * tentativas;
+            valorFinal = valorAtual + valorAdicional;
+            return valorFinal;
+        } else {
+            printf("\nPor favor, insira um número maior ou igual a 0.\n");
+        }
+    }
+}
+
 int main(void) {
     system("chcp 65001 > nul");
 	setlocale(LC_ALL, "Brazilian Portuguese");
@@ -142,6 +162,7 @@ int main(void) {
         subtotal = receberDistancia();
         subtotal = receberPesoModalidade(subtotal, qtdEconomicas, qtdExpressas, qtdPrioritarias);
         subtotal = ativarProtecao(subtotal);
+        subtotal = receberTentativasEntregas(subtotal);
 
         inputConclusaoValido = 0;
         while(inputConclusaoValido == 0) {
@@ -163,6 +184,8 @@ int main(void) {
             }
         }
     }
+
+    scanf("%d", &programaRodando);
     
     return 0;
 }
